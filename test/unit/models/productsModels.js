@@ -1,0 +1,128 @@
+const sinon = require('sinon');
+const { expect } = require('chai');
+
+const connection = require('../../../models/connection');
+const productsModels = require('../../../models/ProductsModels');
+
+describe('"1" Verifica endpoints para listar os produtos', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const result = [[],[]];
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um array', async () => {
+      const result = await productsModels.getAll();
+
+      expect(result).to.be.an('array');
+    });
+
+    it('Retorna um array vazio', async () => {
+      const result = await productsModels.getAll();
+
+      expect(result).to.be.empty;
+    });
+
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const result = [
+    [{
+      id: 1,
+      name: 'Martelo de Thor',
+      quantity: 10,
+    },
+    {
+      id: 2,
+      name: 'Traje De Encolhimento',
+      quantity: 20,
+    }],[]
+  ];
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um array', async () => {
+      const products = await productsModels.getAll();
+
+      expect(products).to.be.an('array');
+    });
+
+    it('Retorna um array de objetos', async () => {
+      const products = await productsModels.getAll();
+
+      expect(products).to.be.equal(result[0]);
+    });
+
+  });
+});
+
+describe('"2" Verifica endpoints para listar os produtos pelo ID', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const result = [[false],[]];
+    const NOT_VALID_ID = 100;   
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um Boolean', async () => {
+      const result = await productsModels.getFindById(NOT_VALID_ID);
+
+      expect(result).to.be.a('boolean');
+    });
+
+    it('Retorna um valor vazio', async () => {
+      const result = await productsModels.getFindById(NOT_VALID_ID);
+
+      expect(result).to.be.false;
+    });
+
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const IS_VALID_ID = 1;
+    const result = [
+    [{
+      id: 1,
+      name: 'Martelo de Thor',
+      quantity: 10,
+    }],[]
+  ];
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await productsModels.getFindById(IS_VALID_ID);
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um objeto com todas informações', async () => {
+      const products = await productsModels.getFindById(IS_VALID_ID);
+
+      expect(products).to.be.equal(result[0][0]);
+    });
+
+  });
+});
