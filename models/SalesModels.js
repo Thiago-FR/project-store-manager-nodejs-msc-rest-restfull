@@ -38,7 +38,27 @@ const getFindById = async (id) => {
   return serialize(result);
 };
 
+const createSales = async () => {
+  const SQL = 'INSERT INTO StoreManager.sales () VALUES ();';
+
+  const [result] = await connection.execute(SQL);
+
+  return { id: result.insertId };
+};
+
+const createSalesProduct = async (id, productId, quantity) => {
+  const SQL = `
+  INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
+  VALUES (?, ? ,?);`;
+
+  await connection.execute(SQL, [id, productId, quantity]);
+
+  return { productId, quantity };
+};
+
 module.exports = {
   getAll,
   getFindById,
+  createSales,
+  createSalesProduct,
 };

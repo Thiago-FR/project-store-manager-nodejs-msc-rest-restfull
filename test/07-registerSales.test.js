@@ -3,7 +3,7 @@ const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
 
-describe.skip("07-registerSales", () => {
+describe("07-registerSales", () => {
   const url = `http://localhost:${process.env.PORT}`;
   let connection;
 
@@ -60,7 +60,7 @@ describe.skip("07-registerSales", () => {
           expect(json.itemsSold[0].productId).toBe(3);
           expect(json.itemsSold[0].quantity).toBe(29);
         });
-    });
+    }, 90000);
 
     it("Será validado que é possível criar várias compras com sucesso", async () => {
       await frisby
@@ -99,6 +99,6 @@ describe.skip("07-registerSales", () => {
           expect(json.itemsSold[1].productId).toBe(2);
           expect(json.itemsSold[1].quantity).toBe(19);
         });
-    });
+    }, 90000);
   });
 })

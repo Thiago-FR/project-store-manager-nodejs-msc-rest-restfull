@@ -2,6 +2,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 const SalesModels = require('../../../models/SalesModels');
+const SalesService = require('../../../services/SalesServices');
 const SalesController = require('../../../controllers/SalesController');
 
 describe('"1" Crie endpoints para listar as Vendas', () => {
@@ -148,6 +149,55 @@ describe('"2" Crie endpoints para listar as Vendas pelo ID', () => {
       await SalesController.getFindById(request, response, next);
 
       expect(response.json.calledWith(result[0])).to.be.equal(true);
+    });
+
+  });
+});
+
+describe('"3" Cria um endpoint para cadastrar vendas', () => {
+    describe('Retorno positivo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    const result = {
+      id: 40,
+      itemsSold: [
+        {
+          productId: 1,
+          quantity: 3
+        }
+      ]
+    }
+
+    before(() => {
+      request.body = [
+        {
+          productId: 1,
+          quantity: 3,
+        }
+      ];
+
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(SalesService, 'createSales').resolves(result);
+    });
+
+    after(() => {
+      SalesService.createSales.restore();
+    });
+
+    it('Retorna um status 201', async () => {
+      await SalesController.createSales(request, response, next);
+
+      expect(response.status.calledWith(201)).to.be.equal(true);
+    });
+
+    it('Retorna um objetos', async () => {
+      await SalesController.createSales(request, response, next);
+
+      expect(response.json.calledWith(result)).to.be.equal(true);
     });
 
   });

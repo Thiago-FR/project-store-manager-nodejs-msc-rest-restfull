@@ -133,3 +133,60 @@ describe('"2" Verifica endpoints para listar as vendas pelo ID', () => {
 
   });
 });
+
+describe('"3" Cria um endpoint para cadastrar vendas', () => { 
+  describe('Retorno positivo da solicitação "sales"', () => {
+    const result = [{ insertId: 3 }];
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(result);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await salesModels.createSales();
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um objeto com o ID', async () => {
+      const products = await salesModels.createSales();
+
+      expect(products).to.have.property("id");
+    });
+
+  });
+
+  describe('Retorno positivo da solicitação "sales_products"', () => {
+    const salesId = 3;
+    const product = {
+      productId: 3,
+      quantity: 5
+    };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await salesModels.createSalesProduct(salesId, product.productId, product.quantity);
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um objeto com o ID', async () => {
+      const products = await salesModels.createSalesProduct(salesId, product.productId, product.quantity);
+
+      expect(products).to.have.property("productId");
+      expect(products).to.have.property("quantity");
+    });
+
+  });
+});
