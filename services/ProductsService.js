@@ -10,6 +10,17 @@ const createProduct = async (name, quantity) => {
   return result;
 };
 
+const updateProduct = async (id, name, quantity) => {
+  const nameExisting = await ProductsModels.getFindById(id);
+  
+  if (!nameExisting) return false;
+
+  const result = await ProductsModels.updateProduct(id, name, quantity);  
+
+  return result;
+};
+
 module.exports = {
   createProduct,
+  updateProduct,
 };

@@ -219,3 +219,36 @@ describe('"4" Verifica produtos pelo Name', () => {
 
   });
 });
+
+describe('"5" Crie um endpoint para atualizar um produto', () => {
+  describe('Retorno positivo da solicitação', () => {
+    const newProduct = {
+      id: 1,
+      name: 'Machadão',
+      quantity: 30,
+    };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await productsModels.updateProduct(newProduct.id, newProduct.name, newProduct.quantity);
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um objeto com todas informações', async () => {
+      const products = await productsModels.updateProduct(newProduct.id, newProduct.name, newProduct.quantity);
+
+      expect(products).to.have.property("id");
+      expect(products).to.have.property("name");
+      expect(products).to.have.property("quantity");
+    });
+
+  });
+});

@@ -42,8 +42,6 @@ describe.skip("04-registerProduct", () => {
         .expect("status", 409)
         .then((response) => {
           const { json } = response;
-          console.log(json);
-//console.log(Object.keys(json));
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Product already exists");
         });

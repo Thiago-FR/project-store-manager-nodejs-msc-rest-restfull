@@ -227,3 +227,84 @@ describe('"3" Cria um endpoint para o cadastro de produtos', () => {
     });
   });
 });
+
+describe('"4" Cria um endpoint para atualizar um produto', () => {
+  describe('Retorno negativo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    before(() => {
+      request.params = { id: 999 };
+      request.body = {
+        name: 'Machadão',
+        quantity: 3,
+      };      
+      
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(ProductsServices, 'updateProduct').resolves(false);
+    });
+
+    after(() => {
+      ProductsServices.updateProduct.restore();
+    });
+
+    it('Retorna um status 404', async () => {
+      await ProductsController.updateProduct(request, response, next);
+
+      expect(response.status.calledWith(404)).to.be.equal(true);
+    });
+
+    it('Retorna uma message "Product not found"', async () => {
+      await ProductsController.updateProduct(request, response, next);
+
+      expect(response.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+    before(() => {
+      request.params = { id: 1 };
+      request.body = {
+        name: 'Machadão',
+        quantity: 3,
+      };
+
+      const result = {
+        ...request.params,
+        ...request.body,
+      };
+
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(ProductsServices, 'updateProduct').resolves(result);
+    });
+
+    after(() => {
+      ProductsServices.updateProduct.restore();
+    });
+
+    it('Retorna um status 201', async () => {
+      await ProductsController.updateProduct(request, response, next);
+
+      expect(response.status.calledWith(200)).to.be.equal(true);
+    });
+
+    it('Retorna um objetos', async () => {
+      await ProductsController.updateProduct(request, response, next);
+      const result = { 
+        id: 1,
+        name: 'Machadão',
+        quantity: 3,
+      };
+
+     expect(response.json.calledWith(result)).to.be.equal(true);
+    });
+  });
+});

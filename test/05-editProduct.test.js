@@ -3,7 +3,7 @@ const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
 
-describe.skip("05-editProduct", () => {
+describe("05-editProduct", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
   let connection;
@@ -52,7 +52,7 @@ describe.skip("05-editProduct", () => {
           expect(json.name).toEqual("Machado de Thor");
           expect(json.quantity).toBe(20);
         });
-    });
+    }, 90000);
 
     it("Será validado que não é possível atualizar um produto que não existe", async () => {
       await frisby
@@ -67,6 +67,6 @@ describe.skip("05-editProduct", () => {
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Product not found");
         });
-    });
+    }, 90000);
   });
 });

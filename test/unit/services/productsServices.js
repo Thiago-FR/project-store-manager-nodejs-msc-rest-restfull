@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const ProductsModels = require('../../../models/ProductsModels');
 const ProductsServices = require('../../../services/ProductsService')
 
-describe('"1" Verifica produtos por Name', () => { 
+describe('"1" Criar um produto', () => { 
   describe('Retorno negativo da solicitação', () => {
     const request = {
       name: 'Machadão',
@@ -62,6 +62,73 @@ describe('"1" Verifica produtos por Name', () => {
 
     it('Retorna um array de objetos', async () => {
       const products = await ProductsServices.createProduct(request.name, request.quantity);
+
+      expect(products).to.be.equal(result);
+    });
+
+  });
+});
+
+describe('"2" Atualizar um produto', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const request = {
+      id: 999,
+      name: 'Machadão',
+      quantity: 3,
+    }
+
+    before(() => {
+      sinon.stub(ProductsModels, 'getFindById').resolves(false);
+    });
+
+    after(() => {
+      ProductsModels.getFindById.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const result = await ProductsServices.updateProduct(request.id, request.name, request.quantity);
+
+      expect(result).to.be.a('boolean');
+    });
+
+    it('Retorna um valor false', async () => {
+      const result = await ProductsServices.updateProduct(request.id, request.name, request.quantity);
+
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const request = {
+      id: 1,
+      name: 'Machadão',
+      quantity: 3,
+    }
+
+    const result = {
+      id: 1,
+      name: 'Xablau',
+      quantity: 30,
+    };
+
+    before(() => {
+      sinon.stub(ProductsModels, 'getFindById').resolves(true);
+      sinon.stub(ProductsModels, 'updateProduct').resolves(result);
+    });
+
+    after(() => {
+      ProductsModels.getFindById.restore();
+      ProductsModels.updateProduct.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await ProductsServices.updateProduct(request.id, request.name, request.quantity);
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um array de objetos', async () => {
+      const products = await ProductsServices.updateProduct(request.id, request.name, request.quantity);
 
       expect(products).to.be.equal(result);
     });
