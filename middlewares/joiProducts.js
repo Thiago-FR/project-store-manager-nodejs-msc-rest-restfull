@@ -19,7 +19,7 @@ const validateJoi = (name, quantity) => {
   return error;
 };
 
-module.exports = (req, res, next) => {
+module.exports = (req, _res, next) => {
   const { name, quantity } = req.body;
   const error = validateJoi(name, quantity);
   if (error) {
