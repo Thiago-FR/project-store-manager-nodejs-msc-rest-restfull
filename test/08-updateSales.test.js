@@ -71,6 +71,6 @@ describe.skip("08-updateSales", () => {
             expect(json[0].productId).toBe(3);
             expect(json[0].quantity).toBe(14);
           });
-    });
+    }, 90000);
   });
 })

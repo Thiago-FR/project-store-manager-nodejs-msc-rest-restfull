@@ -14,6 +14,20 @@ const createSales = async (sales) => {
   };
 };
 
+const updateSales = async (saleId, productId, quantity) => {
+  // const nameExisting = await SalesModels.getFindById(id);
+  
+  // if (!nameExisting.length) return false;
+
+  const result = await SalesModels.updateSales(saleId, productId, quantity);  
+
+  return {
+    saleId,
+    itemUpdated: result,
+  };
+};
+
 module.exports = {
   createSales,
+  updateSales,
 };

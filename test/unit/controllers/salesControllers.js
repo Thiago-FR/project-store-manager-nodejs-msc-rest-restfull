@@ -202,3 +202,53 @@ describe('"3" Cria um endpoint para cadastrar vendas', () => {
 
   });
 });
+
+describe('"4" Cria um endpoint para atualizar vendas', () => {
+  describe('Retorno positivo da solicitação', () => {
+  const response = {};
+  const request = {};
+  const next = () => {};
+
+  const result = {
+    id: 1,
+    itemsSold: [
+      {
+        productId: 1,
+        quantity: 3
+      }
+    ]
+  }
+
+  before(() => {
+    request.params = { id: 1 }
+    request.body = [
+      {
+        productId: 1,
+        quantity: 3,
+      }
+    ];
+
+    response.status = sinon.stub().returns(response);
+    response.json = sinon.stub().returns();
+
+    sinon.stub(SalesService, 'updateSales').resolves(result);
+  });
+
+  after(() => {
+    SalesService.updateSales.restore();
+  });
+
+  it('Retorna um status 200', async () => {
+    await SalesController.updateSales(request, response, next);
+
+    expect(response.status.calledWith(200)).to.be.equal(true);
+  });
+
+  it('Retorna um objetos', async () => {
+    await SalesController.updateSales(request, response, next);
+
+    expect(response.json.calledWith(result)).to.be.equal(true);
+  });
+
+});
+});

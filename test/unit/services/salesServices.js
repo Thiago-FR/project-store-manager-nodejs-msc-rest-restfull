@@ -43,3 +43,34 @@ describe('"1" Cria um endpoint para cadastrar vendas', () => {
 
   });
 });
+
+describe('"2" Atualizar uma venda', () => { 
+  describe('Retorno positivo da solicitação "sales"', () => {
+    const saleId = 1;
+    const product = [{
+      productId: 1,
+      quantity: 6
+    }]
+
+    before(() => {
+      sinon.stub(SalesModels, 'updateSales').resolves(product);
+    });
+
+    after(() => {
+      SalesModels.updateSales.restore();
+    });
+
+    it('Retorna um array', async () => {
+      const products = await SalesModels.updateSales(saleId, product[0].productId, product[0].quantity);
+
+      expect(products).to.be.an('array');
+    });
+
+    it('Retorna um array com produto', async () => {
+      const products = await SalesServices.updateSales(saleId, product[0].productId, product[0].quantity);
+
+      expect(products).to.have.property("saleId");
+      expect(products).to.have.property("itemUpdated");
+    });
+  });
+});
