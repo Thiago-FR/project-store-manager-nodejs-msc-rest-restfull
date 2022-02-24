@@ -252,3 +252,30 @@ describe('"5" Crie um endpoint para atualizar um produto', () => {
 
   });
 });
+
+describe('"6" Crie um endpoint para deletar um produto', () => {
+  describe('Retorno positivo da solicitação', () => {
+    const productID = 99; 
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const products = await productsModels.deleteProduct(productID);
+
+      expect(products).to.be.an('boolean');
+    });
+
+    it('Retorna um valor true', async () => {
+      const products = await productsModels.deleteProduct(productID);
+
+      expect(products).to.be.true;
+    });
+    
+  });
+});

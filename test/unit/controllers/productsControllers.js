@@ -308,3 +308,60 @@ describe('"4" Cria um endpoint para atualizar um produto', () => {
     });
   });
 });
+
+describe('"5" Cria um endpoint para deletar um produto', () => {
+  describe('Retorno negativo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    before(() => {
+      request.params = { id: 999 };     
+      
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(ProductsServices, 'deleteProduct').resolves(false);
+    });
+
+    after(() => {
+      ProductsServices.deleteProduct.restore();
+    });
+
+    it('Retorna um status 404', async () => {
+      await ProductsController.deleteProduct(request, response, next);
+
+      expect(response.status.calledWith(404)).to.be.equal(true);
+    });
+
+    it('Retorna uma message "Product not found"', async () => {
+      await ProductsController.deleteProduct(request, response, next);
+
+      expect(response.json.calledWith({ message: 'Product not found' })).to.be.equal(true);
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+    before(() => {
+      request.params = { id: 1 };
+
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(ProductsServices, 'deleteProduct').resolves(true);
+    });
+
+    after(() => {
+      ProductsServices.deleteProduct.restore();
+    });
+
+    it('Retorna um status 204', async () => {
+      await ProductsController.deleteProduct(request, response, next);
+
+      expect(response.status.calledWith(204)).to.be.equal(true);
+    });
+  });
+});

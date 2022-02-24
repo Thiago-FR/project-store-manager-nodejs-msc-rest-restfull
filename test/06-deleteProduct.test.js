@@ -3,7 +3,7 @@ const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 require("dotenv").config();
 
-describe.skip("06-deleteProduct", () => {
+describe("06-deleteProduct", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
   let connection;
@@ -47,7 +47,7 @@ describe.skip("06-deleteProduct", () => {
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Product not found");
         });
-    });
+    }, 90000);
 
     it("Será validado que não é possível deletar um produto que não existe", async () => {
       await frisby
@@ -59,6 +59,6 @@ describe.skip("06-deleteProduct", () => {
         expect(Object.keys(json)).toContain("message");
         expect(json.message).toEqual("Product not found");
       });
-    });
+    }, 90000);
   });
 });

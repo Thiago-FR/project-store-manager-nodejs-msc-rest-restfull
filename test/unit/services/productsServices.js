@@ -135,3 +135,56 @@ describe('"2" Atualizar um produto', () => {
 
   });
 });
+
+describe('"3" Deleta um produto', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const productId = 99;
+
+    before(() => {
+      sinon.stub(ProductsModels, 'getFindById').resolves(false);
+    });
+
+    after(() => {
+      ProductsModels.getFindById.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const result = await ProductsServices.deleteProduct(productId);
+
+      expect(result).to.be.a('boolean');
+    });
+
+    it('Retorna um valor false', async () => {
+      const result = await ProductsServices.deleteProduct(productId);
+
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const productId = 1;
+
+    before(() => {
+      sinon.stub(ProductsModels, 'getFindById').resolves(true);
+      sinon.stub(ProductsModels, 'deleteProduct').resolves(true);
+    });
+
+    after(() => {
+      ProductsModels.getFindById.restore();
+      ProductsModels.deleteProduct.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const products = await ProductsServices.deleteProduct(productId);
+
+      expect(products).to.be.an('boolean');
+    });
+
+    it('Retorna um array de objetos', async () => {
+      const products = await ProductsServices.deleteProduct(productId);
+
+      expect(products).to.be.true;
+    });
+
+  });
+});
