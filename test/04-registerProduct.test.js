@@ -42,11 +42,12 @@ describe.skip("04-registerProduct", () => {
         .expect("status", 409)
         .then((response) => {
           const { json } = response;
-
+          console.log(json);
+//console.log(Object.keys(json));
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Product already exists");
         });
-    });
+    }, 90000);
 
     it("Será validado que é possível criar um produto com sucesso", async () => {
       await frisby
@@ -66,6 +67,6 @@ describe.skip("04-registerProduct", () => {
           expect(json.name).toEqual("Arco do Gavião Arqueiro");
           expect(json.quantity).toBe(1);
         });
-    });
+    }, 90000);
   });
 });
