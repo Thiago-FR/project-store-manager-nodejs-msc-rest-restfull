@@ -65,7 +65,7 @@ describe.skip("08-updateSales", () => {
           .expect("status", 200)
           .then((response) => {
             const { json } = response;
-  
+
             expect(json.length).toBe(1);
   
             expect(json[0].productId).toBe(3);
