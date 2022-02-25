@@ -3,7 +3,7 @@ const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 
-describe.skip("11-updateQuantity", () => {
+describe("11-updateQuantity", () => {
   const url = `http://localhost:${process.env.PORT}`;
   let connection;
 
@@ -58,7 +58,7 @@ describe.skip("11-updateQuantity", () => {
 
           expect(json.quantity).toBe(5);
         });
-    });
+    }, 90000);
 
     it("Será validado que é possível atualizar a quantidade do produto ao deletar uma compra", async () => {
       await frisby
@@ -73,6 +73,6 @@ describe.skip("11-updateQuantity", () => {
 
           expect(json.quantity).toBe(10);
         });
-    });
+    }, 90000);
   });
 })

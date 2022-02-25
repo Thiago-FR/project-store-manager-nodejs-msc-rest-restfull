@@ -4,6 +4,7 @@ const { expect } = require('chai');
 const SalesModels = require('../../../models/SalesModels');
 const SalesServices = require('../../../services/SalesServices')
 const validateQuantity = require('../../../middlewares/validateQuantityProduct');
+const updateQuantity = require('../../../middlewares/updateQuantityProduct');
 
 describe('"1" Cria um endpoint para cadastrar vendas', () => { 
     describe('Retorno positivo da solicitação', () => {
@@ -18,12 +19,14 @@ describe('"1" Cria um endpoint para cadastrar vendas', () => {
     before(() => {
       sinon.stub(SalesModels, 'createSales').resolves(newSalesId);
       sinon.stub(SalesModels, 'createSalesProduct').resolves(product[0]);
+      sinon.stub(updateQuantity, 'updateQuantityProduct').resolves(true);
       sinon.stub(Promise, 'all').resolves(product);
     });
 
     after(() => {
       SalesModels.createSales.restore();
       SalesModels.createSalesProduct.restore();
+      updateQuantity.updateQuantityProduct.restore();
       Promise.all.restore();
     });
 
@@ -81,11 +84,11 @@ describe('"4" Deleta uma venda', () => {
     const productId = 99;
 
     before(() => {
-      sinon.stub(SalesModels, 'getFindById').resolves([]);
+      sinon.stub(SalesModels, 'getFindById').resolves([]);      
     });
 
     after(() => {
-      SalesModels.getFindById.restore();
+      SalesModels.getFindById.restore();      
     });
 
     it('Retorna um boolean', async () => {
@@ -107,11 +110,13 @@ describe('"4" Deleta uma venda', () => {
     before(() => {
       sinon.stub(SalesModels, 'getFindById').resolves([1]);
       sinon.stub(SalesModels, 'deleteSales').resolves(true);
+      sinon.stub(updateQuantity, 'updateQuantityProductDelete').resolves(true);
     });
 
     after(() => {
       SalesModels.getFindById.restore();
       SalesModels.deleteSales.restore();
+      updateQuantity.updateQuantityProductDelete.restore();
     });
 
     it('Retorna um boolean', async () => {

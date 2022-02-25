@@ -279,3 +279,57 @@ describe('"6" Crie um endpoint para deletar um produto', () => {
     
   });
 });
+
+describe('"7" Atualiza quantidade de produto', () => {
+  describe('Retorno positivo da solicitação', () => {
+    const newProduct = {
+      productId: 1,
+      quantity: 30,
+    };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const products = await productsModels.updateQuantityProduct(newProduct.productId, newProduct.quantity);
+
+      expect(products).to.be.an('object');
+    });
+
+    it('Retorna um objeto com todas informações', async () => {
+      const products = await productsModels.updateQuantityProduct(newProduct.productId, newProduct.quantity);
+
+      expect(products).to.have.property("productId");
+      expect(products).to.have.property("quantity");
+    });
+
+  });
+});
+
+describe('"8" Atualiza quantidade de produto ao deletar', () => {
+  describe('Retorno positivo da solicitação', () => {
+    const newProduct = {
+      productId: 1,
+      quantity: 30,
+    };
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const products = await productsModels.updateQuantityProductDelete(newProduct.productId, newProduct.quantity);
+
+      expect(products).to.be.an('boolean');
+    });
+  });
+});
