@@ -4,7 +4,7 @@ const Importer = require("mysql-import");
 require("dotenv").config();
 jest.setTimeout(30000)
 
-describe.skip("02-list", () => {
+describe("02-list", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
   let connection;

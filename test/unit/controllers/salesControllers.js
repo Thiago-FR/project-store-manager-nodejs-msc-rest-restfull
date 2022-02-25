@@ -205,50 +205,107 @@ describe('"3" Cria um endpoint para cadastrar vendas', () => {
 
 describe('"4" Cria um endpoint para atualizar vendas', () => {
   describe('Retorno positivo da solicitação', () => {
-  const response = {};
-  const request = {};
-  const next = () => {};
+    const response = {};
+    const request = {};
+    const next = () => {};
 
-  const result = {
-    id: 1,
-    itemsSold: [
-      {
-        productId: 1,
-        quantity: 3
-      }
-    ]
-  }
+    const result = {
+      id: 1,
+      itemsSold: [
+        {
+          productId: 1,
+          quantity: 3
+        }
+      ]
+    }
 
-  before(() => {
-    request.params = { id: 1 }
-    request.body = [
-      {
-        productId: 1,
-        quantity: 3,
-      }
-    ];
+    before(() => {
+      request.params = { id: 1 }
+      request.body = [
+        {
+          productId: 1,
+          quantity: 3,
+        }
+      ];
 
-    response.status = sinon.stub().returns(response);
-    response.json = sinon.stub().returns();
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
 
-    sinon.stub(SalesService, 'updateSales').resolves(result);
+      sinon.stub(SalesService, 'updateSales').resolves(result);
+    });
+
+    after(() => {
+      SalesService.updateSales.restore();
+    });
+
+    it('Retorna um status 200', async () => {
+      await SalesController.updateSales(request, response, next);
+
+      expect(response.status.calledWith(200)).to.be.equal(true);
+    });
+
+    it('Retorna um objetos', async () => {
+      await SalesController.updateSales(request, response, next);
+
+      expect(response.json.calledWith(result)).to.be.equal(true);
+    });
   });
-
-  after(() => {
-    SalesService.updateSales.restore();
-  });
-
-  it('Retorna um status 200', async () => {
-    await SalesController.updateSales(request, response, next);
-
-    expect(response.status.calledWith(200)).to.be.equal(true);
-  });
-
-  it('Retorna um objetos', async () => {
-    await SalesController.updateSales(request, response, next);
-
-    expect(response.json.calledWith(result)).to.be.equal(true);
-  });
-
 });
+
+describe('"5" Cria um endpoint para deletar uma venda', () => {
+  describe('Retorno negativo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    before(() => {
+      request.params = { id: 999 };     
+      
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(SalesService, 'deleteSales').resolves(false);
+    });
+
+    after(() => {
+      SalesService.deleteSales.restore();
+    });
+
+    it('Retorna um status 404', async () => {
+      await SalesController.deleteSales(request, response, next);
+
+      expect(response.status.calledWith(404)).to.be.equal(true);
+    });
+
+    it('Retorna uma message "Product not found"', async () => {
+      await SalesController.deleteSales(request, response, next);
+
+      expect(response.json.calledWith({ message: 'Sale not found' })).to.be.equal(true);
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    before(() => {
+      request.params = { id: 1 };
+
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(SalesService, 'deleteSales').resolves(true);
+    });
+
+    after(() => {
+      SalesService.deleteSales.restore();
+    });
+
+    it('Retorna um status 204', async () => {
+      await SalesController.deleteSales(request, response, next);
+
+      expect(response.status.calledWith(204)).to.be.equal(true);
+    });
+  });
 });

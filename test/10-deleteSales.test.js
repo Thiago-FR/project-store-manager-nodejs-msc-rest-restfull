@@ -3,7 +3,7 @@ const frisby = require("frisby");
 const mysql = require("mysql2/promise");
 const Importer = require("mysql-import");
 
-describe.skip("10-deleteSales", () => {
+describe.only("10-deleteSales", () => {
   const url = `http://localhost:${process.env.PORT}`;
   const INVALID_ID = 99999;
   let connection;
@@ -44,7 +44,7 @@ describe.skip("10-deleteSales", () => {
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Sale not found");
         });
-    });
+    }, 90000);
 
     it("Será validado que é possível deletar uma venda com sucesso", async () => {
       await frisby
@@ -60,6 +60,6 @@ describe.skip("10-deleteSales", () => {
           expect(Object.keys(json)).toContain("message");
           expect(json.message).toEqual("Sale not found");
         });
-    });
+    }, 90000);
   });
 });

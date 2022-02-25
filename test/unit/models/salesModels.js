@@ -250,3 +250,30 @@ describe('"4" Cria um endpoint para atualizar uma venda', () => {
     });
   });
 });
+
+describe('"5" Crie um endpoint para deletar uma venda', () => {
+  describe('Retorno positivo da solicitação', () => {
+    const productID = 1; 
+
+    before(() => {
+      sinon.stub(connection, 'execute').resolves(true);
+    });
+
+    after(() => {
+      connection.execute.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const products = await salesModels.deleteSales(productID);
+
+      expect(products).to.be.an('boolean');
+    });
+
+    it('Retorna um valor true', async () => {
+      const products = await salesModels.deleteSales(productID);
+
+      expect(products).to.be.true;
+    });
+    
+  });
+});

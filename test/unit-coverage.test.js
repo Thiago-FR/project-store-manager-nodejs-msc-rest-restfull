@@ -22,7 +22,7 @@ const executeTests = async () => {
   }
 };
 
-describe.skip('Testes das camadas Model, Service e Controller', () => {
+describe('Testes das camadas Model, Service e Controller', () => {
   beforeEach(async() => {
     await executeTests();
   })
@@ -37,7 +37,7 @@ describe.skip('Testes das camadas Model, Service e Controller', () => {
       const coverageResults = await readCoverageFile();
       expect(coverageResults.total.lines.pct).toBeGreaterThanOrEqual(35);
       expect(coverageResults.total.lines.covered).toBeGreaterThanOrEqual(24);
-    });
+    }, 90000);
   });
   
   describe('9 - Escreva testes para cobrir 40% das camadas da sua aplicação', () => {
@@ -46,7 +46,7 @@ describe.skip('Testes das camadas Model, Service e Controller', () => {
       const coverageResults = await readCoverageFile();
       expect(coverageResults.total.lines.pct).toBeGreaterThanOrEqual(40);
       expect(coverageResults.total.lines.covered).toBeGreaterThanOrEqual(24);
-    });
+    }, 90000);
   });
   
   describe('13 - Escreva testes para cobrir 50% das camadas da sua aplicação', () => {
@@ -55,7 +55,7 @@ describe.skip('Testes das camadas Model, Service e Controller', () => {
       const coverageResults = await readCoverageFile();
       expect(coverageResults.total.lines.pct).toBeGreaterThanOrEqual(50);
       expect(coverageResults.total.lines.covered).toBeGreaterThanOrEqual(24);
-    });
+    }, 9000);
   });
 
   describe('14 - Escreva testes para cobrir 60% das camadas da sua aplicação', () => {

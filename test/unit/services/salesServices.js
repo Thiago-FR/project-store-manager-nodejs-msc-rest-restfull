@@ -74,3 +74,49 @@ describe('"2" Atualizar uma venda', () => {
     });
   });
 });
+
+describe('"4" Deleta uma venda', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const productId = 99;
+
+    before(() => {
+      sinon.stub(SalesModels, 'getFindById').resolves([]);
+    });
+
+    after(() => {
+      SalesModels.getFindById.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const result = await SalesServices.deleteSales(productId);
+
+      expect(result).to.be.a('boolean');
+    });
+
+    it('Retorna um valor false', async () => {
+      const result = await SalesServices.deleteSales(productId);
+
+      expect(result).to.be.false;
+    });
+  });
+
+  describe('Retorno positivo da solicitação', () => {
+    const productId = 1;
+
+    before(() => {
+      sinon.stub(SalesModels, 'getFindById').resolves([1]);
+      sinon.stub(SalesModels, 'deleteSales').resolves(true);
+    });
+
+    after(() => {
+      SalesModels.getFindById.restore();
+      SalesModels.deleteSales.restore();
+    });
+
+    it('Retorna um boolean', async () => {
+      const products = await SalesServices.deleteSales(productId);
+
+      expect(products).to.be.true;
+    });
+  });
+});

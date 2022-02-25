@@ -27,7 +27,18 @@ const updateSales = async (saleId, productId, quantity) => {
   };
 };
 
+const deleteSales = async (id) => {
+  const nameExisting = await SalesModels.getFindById(id);
+
+  if (!nameExisting.length) return false;
+  
+  const result = await SalesModels.deleteSales(id);  
+
+  return result;
+};
+
 module.exports = {
   createSales,
   updateSales,
+  deleteSales,
 };
