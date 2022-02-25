@@ -24,9 +24,11 @@ const createSales = async (req, res, _next) => {
 
   const result = await SalesServices.createSales(sales);
 
-  // if (!result.length) return res.status(404).json({ message: 'Sale not found' });
+  if (!result.error) return res.status(201).json(result);
 
-  return res.status(201).json(result);
+  // if (!result) return res.status(404).json({ message: 'Sale not found' });
+
+  return res.status(result.error.code).json({ message: result.error.message });  
 };
 
 const updateSales = async (req, res) => {
@@ -35,7 +37,7 @@ const updateSales = async (req, res) => {
 
   const result = await SalesServices.updateSales(id, sales.productId, sales.quantity);
   
-  // if (!result) return res.status(404).json({ message: 'Product not found' });
+  // if (!result) return res.status(404).json({ message: 'Sale not found' });
 
   return res.status(200).json(result);
 };

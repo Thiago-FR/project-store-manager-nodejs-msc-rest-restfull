@@ -47,6 +47,6 @@ describe.skip("12-validatesQuantity", () => {
           const { json } = responseSales;
           expect(json.message).toBe("Such amount is not permitted to sell");
         });
-    });
+    }, 90000);
   });
 })

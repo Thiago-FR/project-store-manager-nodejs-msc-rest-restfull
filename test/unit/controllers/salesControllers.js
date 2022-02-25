@@ -309,3 +309,48 @@ describe('"5" Cria um endpoint para deletar uma venda', () => {
     });
   });
 });
+
+describe('"6" Valida a quantidade de produtos', () => {
+  describe('Retorno negativo da solicitação', () => {
+    const response = {};
+    const request = {};
+    const next = () => {};
+
+    const result = {
+      error: {
+        code: 422,
+        message: 'Such amount is not permitted to sell'
+      }
+    }
+
+    before(() => {
+      request.body = [
+        {
+          productId: 1,
+          quantity: 300,
+        }
+      ];     
+      
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+
+      sinon.stub(SalesService, 'createSales').resolves(result);
+    });
+
+    after(() => {
+      SalesService.createSales.restore();
+    });
+
+    it('Retorna um status 404', async () => {
+      await SalesController.createSales(request, response, next);
+
+      expect(response.status.calledWith(422)).to.be.equal(true);
+    });
+
+    it('Retorna uma message "Product not found"', async () => {
+      await SalesController.createSales(request, response, next);
+
+      expect(response.json.calledWith({ message: 'Such amount is not permitted to sell' })).to.be.equal(true);
+    });
+  });
+});

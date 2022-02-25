@@ -3,6 +3,7 @@ const { expect } = require('chai');
 
 const SalesModels = require('../../../models/SalesModels');
 const SalesServices = require('../../../services/SalesServices')
+const validateQuantity = require('../../../middlewares/validateQuantityProduct');
 
 describe('"1" Cria um endpoint para cadastrar vendas', () => { 
     describe('Retorno positivo da solicitação', () => {
@@ -117,6 +118,42 @@ describe('"4" Deleta uma venda', () => {
       const products = await SalesServices.deleteSales(productId);
 
       expect(products).to.be.true;
+    });
+  });
+});
+
+describe('"5" Valida a quantidade de produtos', () => { 
+  describe('Retorno negativo da solicitação', () => {
+    const product = [{
+      productId: 1,
+      quantity: 600,
+    }]
+
+    const error = {
+      code: 422,
+      message: 'Such amount is not permitted to sell'
+    }
+
+    before(() => {
+      sinon.stub(validateQuantity, 'validateQuantityProduct').resolves(error);
+    });
+
+    after(() => {
+      validateQuantity.validateQuantityProduct.restore();
+    });
+
+    it('Retorna um objeto', async () => {
+      const result = await SalesServices.createSales(product);
+
+      expect(result).to.be.a('object');
+    });
+
+    it('Retorna um valor de erro', async () => {
+      const result = await SalesServices.createSales(product);
+
+      expect(result).to.have.property("code");
+      expect(result).to.have.property("message");
+      expect(result.message).to.be.equal("Such amount is not permitted to sell");
     });
   });
 });
