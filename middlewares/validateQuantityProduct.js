@@ -1,12 +1,19 @@
 const ProductModels = require('../models/ProductsModels');
 
 const validateQuantityProduct = async (sales) => {
-  const validateQuantity = await sales.map((item) => 
+  const promiseDataProducts = await sales.map((item) => 
   ProductModels.getFindById(item.productId));
 
-  const validations = await Promise.all(validateQuantity);
+  const resultDataProducts = await Promise.all(promiseDataProducts); // Validar Existencia do Produto
 
-  if (validations[0].quantity <= 0 || validations[0].quantity < sales[0].quantity) {
+  let result = false;
+
+  sales.forEach((item) => {
+    const findById = resultDataProducts.find((product) => product.id === item.productId);
+    if (findById && (findById.quantity <= 0 || findById.quantity <= item.quantity)) result = true;
+  });
+
+  if (result) {
     return {
       error: {
         code: 422,

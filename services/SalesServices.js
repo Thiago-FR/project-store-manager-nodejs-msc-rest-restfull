@@ -6,7 +6,7 @@ const createSales = async (sales) => {
   const isQuantityValid = await validateQuantity.validateQuantityProduct(sales);
 
   if (isQuantityValid) return isQuantityValid;
-  
+
   const newSalesId = await SalesModels.createSales();
 
   const newPromise = sales.map((item) => SalesModels
