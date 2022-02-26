@@ -5,13 +5,13 @@ const validateJoi = require('../middlewares/joiSales');
 
 const router = express.Router();
 
-router.get('/', SalesController.getAll);
-router.get('/:id', SalesController.getFindById);
+router.get('/', rescue(SalesController.getAll));
+router.get('/:id', rescue(SalesController.getFindById));
 
 router.post('/', validateJoi, rescue(SalesController.createSales));
 
-router.put('/:id', validateJoi, SalesController.updateSales);
+router.put('/:id', validateJoi, rescue(SalesController.updateSales));
 
-router.delete('/:id', SalesController.deleteSales);
+router.delete('/:id', rescue(SalesController.deleteSales));
 
 module.exports = router;

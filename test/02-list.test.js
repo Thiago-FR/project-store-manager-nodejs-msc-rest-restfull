@@ -129,7 +129,7 @@ describe("02-list", () => {
           expect(json[2].quantity).toBeDefined();
           expect(json[2].date).toBeDefined();
         });
-    });
+    }, 90000);
 
     it("Será validado que é possível listar uma determinada venda", async () => {
       await frisby
