@@ -4,7 +4,7 @@ const validateQuantityProduct = async (sales) => {
   const promiseDataProducts = await sales.map((item) => 
   ProductModels.getFindById(item.productId));
 
-  const resultDataProducts = await Promise.all(promiseDataProducts); // Validar Existencia do Produto
+  const resultDataProducts = await Promise.all(promiseDataProducts);
 
   let result = false;
 
