@@ -1,5 +1,5 @@
-const ProductsModels = require('../models/ProductsModels');
-const ProductsServices = require('../services/ProductsService');
+const ProductsModels = require('../models/products.models');
+const ProductsServices = require('../services/products.services');
 
 const getAll = async (_req, res, _next) => {
   const result = await ProductsModels.getAll();

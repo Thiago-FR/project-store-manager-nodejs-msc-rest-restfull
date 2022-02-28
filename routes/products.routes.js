@@ -1,6 +1,6 @@
 const express = require('express');
 const rescue = require('express-rescue');
-const ProductsController = require('../controllers/ProductsController');
+const ProductsController = require('../controllers/products.controller');
 const validateJoi = require('../middlewares/joiProducts');
 
 const router = express.Router();

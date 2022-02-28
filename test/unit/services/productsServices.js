@@ -1,8 +1,8 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 
-const ProductsModels = require('../../../models/ProductsModels');
-const ProductsServices = require('../../../services/ProductsService')
+const ProductsModels = require('../../../models/products.models');
+const ProductsServices = require('../../../services/products.services')
 
 describe('"1" Criar um produto', () => { 
   describe('Retorno negativo da solicitação', () => {

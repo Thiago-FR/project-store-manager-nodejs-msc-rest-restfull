@@ -1,4 +1,4 @@
-const ProductsModels = require('../models/ProductsModels');
+const ProductsModels = require('../models/products.models');
 
 const updateQuantityProduct = async (sales) => {
   const newPromise = sales.map((item) => ProductsModels

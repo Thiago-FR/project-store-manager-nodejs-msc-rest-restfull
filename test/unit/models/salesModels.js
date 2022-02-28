@@ -2,7 +2,7 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 
 const connection = require('../../../models/connection');
-const salesModels = require('../../../models/SalesModels');
+const salesModels = require('../../../models/sales.models');
 
 describe('"1" Verifica endpoints para listar as Vendas', () => { 
   describe('Retorno negativo da solicitação', () => {

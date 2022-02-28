@@ -1,6 +1,6 @@
 const express = require('express');
 const rescue = require('express-rescue');
-const SalesController = require('../controllers/SalesController');
+const SalesController = require('../controllers/sales.controller');
 const validateJoi = require('../middlewares/joiSales');
 
 const router = express.Router();

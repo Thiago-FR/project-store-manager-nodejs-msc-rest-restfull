@@ -1,8 +1,8 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 
-const SalesModels = require('../../../models/SalesModels');
-const SalesServices = require('../../../services/SalesServices')
+const SalesModels = require('../../../models/sales.models');
+const SalesServices = require('../../../services/sales.services')
 const validateQuantity = require('../../../middlewares/validateQuantityProduct');
 const updateQuantity = require('../../../middlewares/updateQuantityProduct');
 

@@ -1,4 +1,4 @@
-const ProductModels = require('../models/ProductsModels');
+const ProductModels = require('../models/products.models');
 
 const validateQuantityProduct = async (sales) => {
   const promiseDataProducts = await sales.map((item) => 

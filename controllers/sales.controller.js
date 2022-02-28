@@ -1,5 +1,5 @@
-const SalesModels = require('../models/SalesModels');
-const SalesServices = require('../services/SalesServices');
+const SalesModels = require('../models/sales.models');
+const SalesServices = require('../services/sales.services');
 
 const getAll = async (_req, res, _next) => {
   const result = await SalesModels.getAll();

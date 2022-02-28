@@ -1,4 +1,4 @@
-const SalesModels = require('../models/SalesModels');
+const SalesModels = require('../models/sales.models');
 const validateQuantity = require('../middlewares/validateQuantityProduct');
 const updateQuantity = require('../middlewares/updateQuantityProduct');
 
