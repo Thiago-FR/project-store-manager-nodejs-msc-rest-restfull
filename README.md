@@ -11,6 +11,7 @@
 - [Conexão com o Banco](#conexao-db)
 - [Para testar o projeto](#testar-o-projeto)
 - [Arquivos de teste](#arquivos-de-test)
+- [Protótipo](#prototipo)
 
 ---
 
@@ -110,3 +111,7 @@ Atenção :warning: Não rode o comando npm audit fix! Ele atualiza várias depe
 ```
 
 ---
+
+## Protótipo <a name="prototipo"></a>
+
+![Prototipo](/API-nodeJS.gif)

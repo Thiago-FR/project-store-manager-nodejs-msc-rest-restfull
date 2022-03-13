@@ -1,5 +1,12 @@
 const ProductModels = require('../models/products.models');
 
+const error422 = {
+  error: {
+    code: 422,
+    message: 'Such amount is not permitted to sell',
+  },
+};
+
 const validateQuantityProduct = async (sales) => {
   const promiseDataProducts = await sales.map((item) => 
   ProductModels.getFindById(item.productId));
@@ -13,14 +20,7 @@ const validateQuantityProduct = async (sales) => {
     if (findById && (findById.quantity <= 0 || findById.quantity <= item.quantity)) result = true;
   });
 
-  if (result) {
-    return {
-      error: {
-        code: 422,
-        message: 'Such amount is not permitted to sell',
-      },
-    };
-  }
+  if (result) return error422;
 };
 
 module.exports = {
