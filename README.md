@@ -47,7 +47,7 @@ Foi utilizar o banco MySQL para a gestão de dados. Além disso, a API é RESTfu
 
 ⚠️ **Pacotes** ⚠️:
 
-- Foi criado um middlewares de erro personalizado para não repetir a lógica de tratamento de erro em vários lugare, bem como o pacote [express-rescue](https://www.npmjs.com/package/express-rescue) para deixar o código mais enxuto.
+- Foi criado um middlewares de erro personalizado para não repetir a lógica de tratamento de erro em vários lugares, bem como o pacote [express-rescue](https://www.npmjs.com/package/express-rescue) para deixar o código mais enxuto.
 
 - Para realizar a validação dos dados, foi utilizado o pacote [Joi](https://www.npmjs.com/package/joi).
 
